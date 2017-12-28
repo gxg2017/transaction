@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace：命名空间 -->
+<mapper namespace="com.offcn.mappers.FisherMapper">
+	<resultMap type="Fisher" id="fdrm">
+		<id property="id" column="id" />
+		<result property="nickname" column="nickname" />
+		<result property="phonenum" column="phonenum" />
+		<result property="password" column="password" />
+		<result property="account" column="account" />
+		<result property="birthday" column="birthday" />
+		<result property="registration_date" column="registration_date" />
+		<result property="address" column="address" />
+		<result property="shipaddress" column="shipaddress" />
+		<collection property="idleList" ofType="Idle" >
+			<id property="id" column="iid" />
+			<result property="name" column="name" />
+			<result property="idleimg" column="idleimg" />
+			<result property="amount" column="amount" />
+			<result property="location" column="location" />
+			<result property="purchasing_date" column="purchasing_date" />
+			<result property="original_price" column="original_price" />
+			<result property="transfer_price" column="transfer_price" />
+			<result property="transfer_mode" column="transfer_mode" />
+			<result property="transfer_state" column="transfer_state" />
+			<result property="percentage" column="percentage" />
+			
+		</collection>
+	</resultMap>
+	
+
+
+	
+	<select id="identifyFisher" parameterType="Fisher" resultType="Fisher">
+		SELECT * from fisher where account=#{account} and password=#{password}
+	</select>
+	<insert id="saveFisher" parameterType="Fisher">
+		<selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="int">
+			SELECT last_insert_id()
+		</selectKey>
+		insert into fisher (account,password,phonenum,registration_date) values (#{account},#{password},#{phonenum},#{registration_date})
+	</insert>
+	<select id="getFisher" parameterType="Integer" resultType="Fisher">
+		select *from fisher where id=#{id}
+	</select>
+	<update id="updateFisher" parameterType="Fisher">
+		
+		UPDATE fisher SET nickname=#{nickname},birthday=#{birthday}, address=#{address} WHERE id=#{id}
+	</update>
+	
+	<update id="updatePassword" parameterType="Fisher">
+		UPDATE fisher SET password=#{password} WHERE id=#{id}
+	</update>
+	
+	<update id="updateShipAddress" parameterType="Fisher">
+		UPDATE fisher SET shipaddress=#{shipaddress} WHERE id=#{id}
+	</update>
+	
+</mapper>

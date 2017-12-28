@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace：命名空间 -->
+<mapper namespace="com.offcn.mappers.IdleMapper">
+	
+	<select id="getIdleList"  resultType="Idle">
+		SELECT * from idle
+	</select>
+	<insert id="saveIdle" parameterType="Idle">
+		
+	INSERT INTO idle (name,idleimg,amount,location,purchasing_date,original_price,transfer_price,transfer_mode,percentage,fk_idletype,fk_fisher) VALUES
+	(#{name},#{idleimg},#{amount},#{location},#{purchasing_date},#{original_price},#{transfer_price},
+		#{transfer_mode},#{percentage},#{fk_idletype},#{fk_fisher})
+	</insert>
+	<select id="getIdleListById" parameterType="Integer" resultType="Idle">
+		select * from idle where fk_fisher=#{fk_fisher}
+	</select>
+	<select id="getIdleById" parameterType="Integer" resultType="Idle">
+		select * from idle where id=#{id}
+	</select>
+	<update id="updateIdle" parameterType="Idle">
+		UPDATE idle set amount=amount-#{amount},transfer_state=#{transfer_state} where id=#{id}
+	</update>
+	<update id="updateIdleStateById" parameterType="QueryVo">
+		update idle set transfer_state=#{transfer_state} where id=#{id}
+	</update>
+	
+	
+</mapper>

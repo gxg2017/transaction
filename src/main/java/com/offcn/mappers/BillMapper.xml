@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace：命名空间 -->
+<mapper namespace="com.offcn.mappers.BillMapper">
+	
+	
+	<insert id="insertBill" parameterType="Bill">
+		<selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="int">
+			SELECT last_insert_id()
+		</selectKey>
+		INSERT into bill (productname,num,price,totalprice,fisher_id) VALUES (#{productname},#{num},#{price},#{totalprice},#{fisher_id})
+	</insert>
+	
+</mapper>
